@@ -33,8 +33,12 @@ func main() {
 		}
 		fmt.Println(result)
 	case "forecast":
-		fmt.Printf("Fetching weather forecast for %s\n", city)
-		// ここに天気予報を取得する処理を追加
+		result, err := api.GetWeatherForecast(lat, lon, apiKey)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+		fmt.Println(result)
 	default:
 		fmt.Println("Invalid command. Use 'current' or 'forecast'.")
 		os.Exit(1)
