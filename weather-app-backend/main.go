@@ -23,12 +23,15 @@ func main() {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
 	}
-	fmt.Printf("Coordinates for %s: %f, %f\n", city, lat, lon)
 
 	switch command {
 	case "current":
-		fmt.Printf("Fetching current weather for %s\n", city)
-		// ここに現在の天気を取得する処理を追加
+		result, err := api.GetCurrentWeather(lat, lon, apiKey)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+		fmt.Println(result)
 	case "forecast":
 		fmt.Printf("Fetching weather forecast for %s\n", city)
 		// ここに天気予報を取得する処理を追加
