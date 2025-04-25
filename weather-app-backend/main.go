@@ -1,43 +1,43 @@
 package main
 
 import (
-	"fmt"
-	"os"
+	"fmt" // エラーメッセージを表示するためのパッケージ
+	"os"  // 環境変数を読み込むためのパッケージ
 
-	"github.com/stein579/go-weather/weather-app-backend/config"
-	"github.com/stein579/go-weather/weather-app-backend/controllers"
+	"github.com/stein579/go-weather/weather-app-backend/config"      // 設定ファイルを読み込むためのパッケージ
+	"github.com/stein579/go-weather/weather-app-backend/controllers" // コントローラーを読み込むためのパッケージ
 )
 
 func main() {
-	apiKey, err := config.GetAPIKey()
+	apiKey, err := config.GetAPIKey() // APIキーを取得する
 	if err != nil {
-		fmt.Println("Error: ", err)
-		os.Exit(1)
+		fmt.Println("Error: ", err) // エラーメッセージを表示する
+		os.Exit(1)                  // プログラムを終了する、Qiita参考
 	}
 
-	controller := controllers.NewWeatherController(apiKey)
+	controller := controllers.NewWeatherController(apiKey) // コントローラーを作成する
 
-	if len(os.Args) != 4 {
-		fmt.Println("Usage: go run main.go api [current|forecast] CITY")
-		os.Exit(1)
+	if len(os.Args) != 4 { // コマンドライン引数の数が4つでない場合
+		fmt.Println("Usage: go run main.go api [current|forecast] CITY") // コマンドライン引数の数が4つでない場合はエラーメッセージを表示する
+		os.Exit(1)                                                       // プログラムを終了する、Qiita参考
 	}
 
-	command := os.Args[2]
-	city := os.Args[3]
+	command := os.Args[2] // コマンドライン引数の2番目の要素を取得する
+	city := os.Args[3]    // コマンドライン引数の3番目の要素を取得する
 
-	var cmdErr error
-	switch command {
-	case "current":
-		cmdErr = controller.GetCurrentWeather(city)
-	case "forecast":
-		cmdErr = controller.GetWeatherForecast(city)
-	default:
-		fmt.Println("Invalid command. Use 'current' or 'forecast'.")
-		os.Exit(1)
+	var cmdErr error // コマンドライン引数の数が4つでない場合はエラーメッセージを表示する
+	switch command { // コマンドライン引数の2番目の要素を取得する
+	case "current": // コマンドライン引数の2番目の要素が"current"の場合
+		cmdErr = controller.GetCurrentWeather(city) // コントローラーのGetCurrentWeatherメソッドを呼び出す
+	case "forecast": // コマンドライン引数の2番目の要素が"forecast"の場合
+		cmdErr = controller.GetWeatherForecast(city) // コントローラーのGetWeatherForecastメソッドを呼び出す
+	default: // コマンドライン引数の2番目の要素が"current"も"forecast"もない場合
+		fmt.Println("Invalid command. Use 'current' or 'forecast'.") // エラーメッセージを表示する
+		os.Exit(1)                                                   // プログラムを終了する、Qiita参考
 	}
 
-	if cmdErr != nil {
-		fmt.Println("Error:", cmdErr)
-		os.Exit(1)
+	if cmdErr != nil { // コマンドライン引数の数が4つでない場合はエラーメッセージを表示する
+		fmt.Println("Error:", cmdErr) // エラーメッセージを表示する
+		os.Exit(1)                    // プログラムを終了する、Qiita参考
 	}
 }
